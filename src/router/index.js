@@ -97,8 +97,8 @@ export const asyncRoutes = [
       name: 'UserData',
       component: () => import('@/views/platformData/userData/index'),
       meta: {
-        title: '用户管理',
-        icon: 'el-icon-s-custom'
+        title: '用户数据',
+        icon: 'peoples'
       }
     },
     {
@@ -106,8 +106,8 @@ export const asyncRoutes = [
       name: 'ArticleData',
       component: () => import('@/views/platformData/articleData/index'),
       meta: {
-        title: '文章管理',
-        icon: 'el-icon-s-check'
+        title: '文章数据',
+        icon: 'el-icon-notebook-2'
       }
     }]
   },
@@ -129,7 +129,7 @@ export const asyncRoutes = [
       component: () => import('@/views/platformManage/userList/index'),
       meta: {
         title: '用户列表',
-        icon: 'peoples'
+        icon: 'el-icon-s-custom'
       }
     },
     {
@@ -138,7 +138,7 @@ export const asyncRoutes = [
       component: () => import('@/views/platformManage/articleList/index'),
       meta: {
         title: '文章列表',
-        icon: 'el-icon-notebook-2'
+        icon: 'el-icon-s-check'
       }
     }
     ]

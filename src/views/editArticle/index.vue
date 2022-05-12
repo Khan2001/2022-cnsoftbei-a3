@@ -1,30 +1,35 @@
 <template>
-  <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+  <div class="components-container">
+    <div>
+      <tinymce v-model="content" :height="300" />
+    </div>
+    <div class="editor-content" v-html="content" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import Tinymce from '@/components/Tinymce'
 
 export default {
-  name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  name: 'TinymceDemo',
+  components: { Tinymce },
+  data() {
+    return {
+      content:
+      `<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1><p style="text-align: center; font-size: 15px;"><ul>
+        <li>Our <a href="//www.tinymce.com/docs/">documentation</a> is a great resource for learning how to configure TinyMCE.</li><li>Have a specific question? Visit the <a href="https://community.tinymce.com/forum/">Community Forum</a>.</li><li>We also offer enterprise grade support as part of <a href="https://tinymce.com/pricing">TinyMCE premium subscriptions</a>.</li>
+      </ul>`
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+<style scoped>
+.components-container{
+  margin: 2%;
+}
+.editor-content{
+  margin-top: 20px;
 }
 </style>
+

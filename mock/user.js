@@ -13,7 +13,7 @@ const users = {
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin Khan',
+    name: 'Super Admin',
     id: '1',
     date: '2001-01-01'
   },
@@ -21,7 +21,7 @@ const users = {
     roles: ['editor'],
     introduction: 'I am an editor',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor khan',
+    name: 'Normal Editor',
     id: '2',
     date: '2001-01-02'
   }
