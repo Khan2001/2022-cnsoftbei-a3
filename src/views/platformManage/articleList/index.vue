@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="标题" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.type" placeholder="类型" clearable class="filter-item" style="width: 130px">
+      <el-input v-model="listQuery.title" placeholder="标题" style="width: 200px;margin-right: 1%;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-select v-model="listQuery.type" placeholder="类型" clearable class="filter-item" style="width: 130px;margin-right: 1%;">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
+      <el-select v-model="listQuery.sort" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -50,7 +50,7 @@
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100">
+      <el-table-column label="状态" class-name="status-col" width="100" align="center">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}

@@ -44,10 +44,12 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
+      console.log('action before login userInfo:', JSON.stringify(userInfo))
       login({ username: username.trim(), password: password }).then(response => {
+        console.log('login response:', JSON.stringify(response))
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data.accessToken)
+        setToken(data.accessToken)
         resolve()
       }).catch(error => {
         reject(error)
@@ -59,6 +61,7 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
+        console.log('getInfo response:', JSON.stringify(response))
         const { data } = response
 
         if (!data) {
@@ -101,8 +104,9 @@ const actions = {
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {
-      removeToken() // must remove  token  first
-      commit('RESET_STATE')
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
       resolve()
     })
   }
