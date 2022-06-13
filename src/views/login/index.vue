@@ -53,21 +53,20 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('密码不得少于6位'))
       } else {
         callback()
       }
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不得少于6位'))
+    const validateUsername = (rule, value, callback) => {
+      if (value.length < 2) {
+        callback(new Error('用户名不得少于2位'))
       } else {
         callback()
       }
@@ -105,16 +104,34 @@ export default {
         this.$refs.password.focus()
       })
     },
+    handleRegister() {
+      this.loading = true
+      this.$store.dispatch('user/register', this.loginForm)
+        .then(() => {
+          this.$router.push({ path: '/dashboard' })
+          this.loading = false
+        })
+        .catch((err) => {
+          console.log(err)
+          this.loading = false
+        })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: '/dashboard' || '/', query: this.otherQuery })
+            .then((res) => {
+              // 当状态码不为2007时，res可能不存在
+              if (res && res.code === 2007) {
+                this.handleRegister()
+                return
+              }
+              this.$router.push({ path: '/dashboard' || '/' })
               this.loading = false
             })
-            .catch(() => {
+            .catch((res) => {
+              console.log(res, 'error')
               this.loading = false
             })
         } else {

@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             阅读量
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="hitsNumber" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             点赞数
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="likesNumber" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             评论数
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="commentsNumber" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,6 +48,20 @@ import CountTo from 'vue-count-to'
 export default {
   components: {
     CountTo
+  },
+  props: {
+    hitsNumber: {
+      type: Number,
+      default: 0
+    },
+    likesNumber: {
+      type: Number,
+      default: 0
+    },
+    commentsNumber: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     handleSetLineChartData(type) {

@@ -1,15 +1,37 @@
 <template>
   <div class="chart-container">
-    <chart height="100%" width="100%" />
+    <chart
+      v-if="data"
+      :new-user-number="data && data.newUserNumber"
+      :total-user-number="data && data.totalUserNumber"
+      height="100%"
+      width="100%"
+    />
   </div>
 </template>
 
 <script>
 import Chart from '@/components/Charts/MixChart'
+import { userData } from '@/api/admin'
 
 export default {
   name: 'MixChart',
-  components: { Chart }
+  components: { Chart },
+  data() {
+    return {
+      currentRole: 'adminDashboard',
+      data: null
+    }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    async init() {
+      const { data } = await userData()
+      this.data = data
+    }
+  }
 }
 </script>
 

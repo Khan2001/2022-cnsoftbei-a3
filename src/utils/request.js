@@ -48,6 +48,9 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
+    if (res.code === 2007) {
+      return res
+    }
     if (res.code !== 200) {
       Message({
         message: res.message || 'Error',
@@ -56,17 +59,23 @@ service.interceptors.response.use(
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (res.code === 2009 || res.code === 2002 || res.code === 4003 || res.code === 2006) {
         // to re-login
-        MessageBox.confirm('你已经登出，点击取消留在此界面或再次登录', '确认登出', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
+        console.log(this.$route.path)
+        if (this.$route.path !== '/login') {
+          MessageBox.confirm('登录已失效，点击取消留在此界面或再次登录', '确认登出', {
+            confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
           })
-        })
+        }
+      }
+      if (res.code === 4002) {
+        // 刷新token操作
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {

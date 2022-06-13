@@ -33,6 +33,18 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+/**
+ * 全局方法，去除对象中值为空的key
+ */
+Vue.prototype.$omitBy = obj => {
+  const _newPar = {}
+  for (const key in obj) {
+    if ((obj[key] === 0 || obj[key] === false || obj[key]) && obj[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== '') {
+      _newPar[key] = obj[key]
+    }
+    return _newPar
+  }
+}
 Vue.config.productionTip = false
 
 new Vue({

@@ -23,6 +23,12 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    bar: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -45,7 +51,19 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
+      const series = []
+      this.bar.forEach(item => {
+        series.push(
+          {
+            name: item.type,
+            type: 'bar',
+            stack: 'vistors',
+            barWidth: '60%',
+            data: item.typeNumber,
+            animationDuration
+          }
+        )
+      })
       this.chart.setOption({
         tooltip: {
           trigger: 'axis',
@@ -73,28 +91,7 @@ export default {
             show: false
           }
         }],
-        series: [{
-          name: 'pageA',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }]
+        series: series
       })
     }
   }

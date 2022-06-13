@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             今日新用户数
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="dayUserNumber" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             总用户数
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="userNumber" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             今日新文章数
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="dayArticleNumber" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             总文章数
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="articleNumber" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -61,6 +61,24 @@ import CountTo from 'vue-count-to'
 export default {
   components: {
     CountTo
+  },
+  props: {
+    userNumber: {
+      type: Number,
+      default: 0
+    },
+    articleNumber: {
+      type: Number,
+      default: 0
+    },
+    dayArticleNumber: {
+      type: Number,
+      default: 0
+    },
+    dayUserNumber: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     handleSetLineChartData(type) {

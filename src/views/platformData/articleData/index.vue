@@ -3,12 +3,16 @@
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart
+            v-if="pie"
+            :type="pie && pie.type"
+            :article-number="pie && pie.articleNumber"
+          />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <bar-chart />
+          <bar-chart v-if="bar" :bar="bar" />
         </div>
       </el-col>
     </el-row>
@@ -18,25 +22,7 @@
 <script>
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
-
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+import { articleData } from '@/api/admin'
 
 export default {
   name: 'DashboardAdmin',
@@ -46,12 +32,18 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      pie: null,
+      bar: null
     }
   },
+  created() {
+    this.init()
+  },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+    async init() {
+      const { data } = await articleData()
+      this.pie = data.pie
+      this.bar = data.bar
     }
   }
 }

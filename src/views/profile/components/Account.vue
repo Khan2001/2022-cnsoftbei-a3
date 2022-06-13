@@ -3,11 +3,8 @@
     <el-form-item label="用户名">
       <el-input v-model.trim="user.name" />
     </el-form-item>
-    <el-form-item label="Email">
-      <el-input v-model.trim="user.email" />
-    </el-form-item>
     <el-form-item label="密码">
-      <el-input v-model.trim="user.name" type="password" />
+      <el-input v-model.trim="user.password" type="password" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">保存</el-button>
@@ -21,9 +18,9 @@
       :key="imagecropperKey"
       :width="300"
       :height="300"
-      url="https://httpbin.org/post"
       lang-type="en"
       @close="close"
+      @crop-success="returnImg"
       @crop-upload-success="cropSuccess"
     />
   </el-form>
@@ -31,6 +28,7 @@
 
 <script>
 import ImageCropper from '@/components/ImageCropper'
+import { updateAvatar, updateInfo } from '@/api/user'
 
 export default {
   name: 'AvatarUpload',
@@ -41,7 +39,6 @@ export default {
       default: () => {
         return {
           name: '',
-          email: '',
           password: ''
         }
       }
@@ -55,17 +52,32 @@ export default {
     }
   },
   methods: {
-    submit() {
-      this.$message({
-        message: '用户资料已更新',
-        type: 'success',
-        duration: 5 * 1000
+    async submit() {
+      if (this.user.name === '') {
+        this.$message.error('用户名不能为空')
+        return
+      }
+      const { message } = await updateInfo({
+        name: this.user.name,
+        password: this.user.password
       })
+      this.$emit('get-user')
+      this.$message.success(message)
     },
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
       this.image = resData.files.avatar
+      console.log(this.image)
+    },
+    async returnImg(res) {
+      const index = res.indexOf(',')
+      const img = res.substr(index + 1, res.length)
+      console.log(img)
+      const { data } = await updateAvatar({
+        avatar: img
+      })
+      console.log(data)
     },
     close() {
       this.imagecropperShow = false

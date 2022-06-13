@@ -1,36 +1,25 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group
+      :user-number="total.userNumber"
+      :article-number="total.articleNumber"
+      :day-article-number="total.dayArticleNumber"
+      :day-user-number="total.dayUserNumber"
+      @handleSetLineChartData="handleSetLineChartData"
+    />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-top:32px;">
-      <line-chart :chart-data="lineChartData" />
+      <line-chart ref="chart" :chart-data="lineChartData" />
     </el-row>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { getInfo } from '@/api/user'
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-
-const lineChartData = {
-  newUsers: {
-    totalData: [100, 120, 161, 134, 105, 160, 165],
-    newData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  totalUsers: {
-    totalData: [200, 192, 120, 144, 160, 130, 140],
-    newData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  newArticles: {
-    totalData: [80, 100, 121, 104, 105, 90, 100],
-    newData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  totalArticles: {
-    totalData: [130, 140, 141, 142, 145, 150, 160],
-    newData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
 
 export default {
   name: 'DashboardAdmin',
@@ -40,15 +29,42 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newUsers
+      lineChartData: {},
+      total: {}
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
+  created() {
+    this.getLineChartData()
+  },
   methods: {
+    async getLineChartData() {
+      const { data } = await getInfo(this.token)
+      this.LineChartData = {
+        newUsers: data.newUsers,
+        totalUsers: data.totalUsers,
+        newArticles: data.newArticles,
+        totalArticles: data.totalArticles
+      }
+      this.total = {
+        userNumber: data.userNumber,
+        articleNumber: data.articleNumber,
+        dayArticleNumber: data.dayArticleNumber,
+        dayUserNumber: data.dayUserNumber
+      }
+      this.$refs.chart.initChart(data.newUsers)
+    },
     handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+      this.$refs.chart.initChart(this.LineChartData[type])
+      /* console.log('handleSetLineChartData(type) this.LineChartData', this.LineChartData)*/
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

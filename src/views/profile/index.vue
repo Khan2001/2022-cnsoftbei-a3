@@ -11,7 +11,7 @@
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane label="详细资料" name="account">
-                <account :user="user" />
+                <account @get-user="getUser" :user="user" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -45,17 +45,17 @@ export default {
       'date'
     ])
   },
-  created() {
-    this.getUser()
+  async created() {
+    await this.getUser()
   },
   methods: {
     getUser() {
       this.user = {
         name: this.name,
-        role: this.roles.join(' | '),
-        email: 'admin@test.com',
+        role: this.roles,
         avatar: this.avatar,
         id: this.id,
+        password: '',
         date: this.date
       }
     }

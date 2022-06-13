@@ -1,10 +1,27 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login, logout, getInfo, register } from '@/api/user'
+import { getToken, setToken, removeToken, getRefreshToken, setRefreshToken, removeRefreshToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
+    resetToken: getRefreshToken(),
+    newUsers: {
+      totalData: [],
+      newData: []
+    },
+    totalUsers: {
+      totalData: [],
+      newData: []
+    },
+    newArticles: {
+      totalData: [],
+      newData: []
+    },
+    totalArticles: {
+      totalData: [],
+      newData: []
+    },
     name: '',
     avatar: '',
     roles: [],
@@ -21,6 +38,19 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  SET_NEWUSERS: (state, newUsers) => {
+    state.newUsers = newUsers
+    // state.newUsers.totalData = newUsers.totalData
+  },
+  SET_TOTALUSERS: (state, totalUsers) => {
+    state.totalUsers = totalUsers
+  },
+  SET_NEWARTICLES: (state, newArticles) => {
+    state.newArticles = newArticles
+  },
+  SET_TOTALARTICLES: (state, totalArticles) => {
+    state.totalArticles = totalArticles
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -41,25 +71,47 @@ const mutations = {
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
+  login({ commit, dispatch }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      console.log('action before login userInfo:', JSON.stringify(userInfo))
+      /* console.log('action before login userInfo:', JSON.stringify(userInfo))*/
       login({ username: username.trim(), password: password }).then(response => {
-        console.log('login response:', JSON.stringify(response))
+        /* console.log('login response:', JSON.stringify(response))*/
         const { data } = response
+        if (response.code === 2007) {
+          resolve(response)
+          return
+        }
         commit('SET_TOKEN', data.accessToken)
+        // dispatch('dashboard/getDashboardData', {}, { root: true })
         setToken(data.accessToken)
+        setRefreshToken(data.resetToken)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
   },
-
+  register({ commit, dispatch }, userInfo) {
+    const { username, password } = userInfo
+    return new Promise((resolve, reject) => {
+      register({ username: username.trim(), password: password }).then(response => {
+        const { data } = response
+        console.log(data)
+        commit('SET_TOKEN', data.accessToken)
+        setToken(data.accessToken)
+        setRefreshToken(data.refreshToken)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
+      console.log(state.token, 'token')
+      // 模拟接口获取到的token每次都不一样
       getInfo(state.token).then(response => {
         console.log('getInfo response:', JSON.stringify(response))
         const { data } = response
@@ -68,13 +120,17 @@ const actions = {
           reject('校验失败，请重新登录')
         }
 
-        const { roles, name, avatar, id, date } = data
+        const { newUsers, totalUsers, newArticles, totalArticles, roles, name, avatar, id, date } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
 
+        commit('SET_NEWUSERS', newUsers)
+        commit('SET_TOTALUSERS', totalUsers)
+        commit('SET_NEWARTICLES', newArticles)
+        commit('SET_TOTALARTICLES', totalArticles)
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

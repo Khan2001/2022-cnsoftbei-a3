@@ -21,6 +21,18 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    type: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    articleNumber: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -43,7 +55,13 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
+      const articleNumber = []
+      this.articleNumber.forEach((item, index) => {
+        articleNumber.push({
+          value: item,
+          name: this.type[index]
+        })
+      })
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
@@ -52,22 +70,16 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['Industries', 'Technology', 'Forex', 'Gold', 'Forecasts']
+          data: this.type
         },
         series: [
           {
-            name: 'WEEKLY WRITE ARTICLES',
+            name: '文章数据',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: [
-              { value: 320, name: 'Industries' },
-              { value: 240, name: 'Technology' },
-              { value: 149, name: 'Forex' },
-              { value: 100, name: 'Gold' },
-              { value: 59, name: 'Forecasts' }
-            ],
+            data: articleNumber,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }
