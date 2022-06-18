@@ -5,8 +5,8 @@
       <el-select v-model="listQuery.typeId" placeholder="类型" clearable class="filter-item" style="width: 130px;margin-right: 1%;">
         <el-option v-for="item in roleOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
-      <el-select v-model="listQuery.IdOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in IdOrderOptions" :key="item.key" :label="item.label" :value="item.key" />
+      <el-select v-model="listQuery.idOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
+        <el-option v-for="item in idOrderOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
@@ -38,23 +38,23 @@
       </el-table-column>
       <el-table-column label="时间" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.createDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.date | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="标题" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="edit(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type.typeName }}</el-tag>
+          <el-tag>{{ row.typeId | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="阅读量" align="center" width="95">
         <template slot-scope="{row}">
-          <span class="link-type">{{ row.hits }}</span>
+          <span class="link-type">{{ row.hitsNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="分数" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.scores }}</span>
+          <span>{{ row.score }}</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" width="80" align="center">
@@ -89,12 +89,17 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
-const roleOptions = [
+const typeOptions = [
   { key: '1', display_name: '体育' },
   { key: '2', display_name: '娱乐' },
   { key: '3', display_name: '军事' },
   { key: '4', display_name: '国际' }
 ]
+
+const calendarTypeKeyValue = typeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
 
 export default {
   name: 'ComplexTable',
@@ -110,6 +115,9 @@ export default {
       }
       return statusMap[status]
     },
+    typeFilter(type) {
+      return calendarTypeKeyValue[type]
+    },
     parseTime: parseTime
   },
   data() {
@@ -118,14 +126,14 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      page: 2,
+      page: 1,
       listQuery: {
-        IdOrder: 0,
+        idOrder: 0,
         title: undefined,
         typeId: undefined
       },
-      roleOptions,
-      IdOrderOptions: [{ label: '序号升序', key: 0 }, { label: '序号降序', key: 1 }]
+      typeOptions,
+      idOrderOptions: [{ label: '序号升序', key: 0 }, { label: '序号降序', key: 1 }]
     }
   },
   created() {
@@ -138,7 +146,7 @@ export default {
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getArticleList(this.page, params)
       this.list = data.data
-      this.total = data.articleNumber
+      this.total = data.totalArticlesNumber
       this.listLoading = false
     },
     /* 搜索*/
@@ -147,7 +155,7 @@ export default {
       this.getList()
     },
     async release(row) {
-      const { message } = await uploadArticle({ id: row.id, typeId: row.type.typeId, status: 3 })
+      const { message } = await uploadArticle({ id: row.id, typeId: row.typeId, status: 3 })
       this.$notify({
         title: 'Success',
         message: message,

@@ -25,13 +25,13 @@ export default {
       type: String,
       default: '200px'
     },
-    totalUserNumber: {
+    totalUsersNumber: {
       type: Array,
       default: () => {
         return []
       }
     },
-    newUserNumber: {
+    newUsersNumber: {
       type: Array,
       default: () => {
         return []
@@ -123,7 +123,6 @@ export default {
           },
           axisLabel: {
             interval: 0
-
           },
           data: xData
         }],
@@ -160,12 +159,10 @@ export default {
           handleSize: '110%',
           handleStyle: {
             color: '#d3dee5'
-
           },
           textStyle: {
             color: '#fff' },
           borderColor: '#90979c'
-
         }, {
           type: 'inside',
           show: true,
@@ -190,7 +187,7 @@ export default {
               }
             }
           },
-          data: this.newUserNumber
+          data: this.newUsersNumber
         }, {
           name: '总用户数',
           type: 'line',
@@ -210,7 +207,7 @@ export default {
               }
             }
           },
-          data: this.totalUserNumber
+          data: this.totalUsersNumber
         }
         ]
       })

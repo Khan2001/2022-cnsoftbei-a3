@@ -5,7 +5,8 @@
       :likes-number="total && total.likesNumber"
       :hits-number="total && total.hitsNumber"
       :comments-number="total && total.commentsNumber"
-      @handleSetLineChartData="handleSetLineChartData" />
+      @handleSetLineChartData="handleSetLineChartData"
+    />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-top:32px;">
       <line-chart v-if="data.hits" :chart-data="lineChartData" />

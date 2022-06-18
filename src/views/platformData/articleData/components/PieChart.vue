@@ -22,13 +22,13 @@ export default {
       type: String,
       default: '300px'
     },
-    type: {
+    typeId: {
       type: Array,
       default: () => {
-        return []
+        return ['体育', '娱乐', '军事', '国际']
       }
     },
-    articleNumber: {
+    totalArticles: {
       type: Array,
       default: () => {
         return []
@@ -55,11 +55,11 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      const articleNumber = []
-      this.articleNumber.forEach((item, index) => {
-        articleNumber.push({
+      const totalArticles = []
+      this.totalArticles.forEach((item, index) => {
+        totalArticles.push({
           value: item,
-          name: this.type[index]
+          name: this.typeId[index]
         })
       })
       this.chart.setOption({
@@ -79,9 +79,9 @@ export default {
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: articleNumber,
+            data: totalArticles,
             animationEasing: 'cubicInOut',
-            animationDuration: 2600
+            animationDuration: 200
           }
         ]
       })

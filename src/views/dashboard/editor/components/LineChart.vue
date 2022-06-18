@@ -65,7 +65,7 @@ export default {
     setOptions({ totalData, newData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['6天前', '5天前', '4天前', '3天前', '2天前', '1天前', '今天'],
           boundaryGap: false,
           axisTick: {
             show: false

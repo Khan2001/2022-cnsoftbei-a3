@@ -95,10 +95,10 @@ export default {
           }
         },
         legend: {
-          data: ['total', 'new']
+          data: ['总数', '新增']
         },
         series: [{
-          name: 'total', itemStyle: {
+          name: '总数', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -114,7 +114,7 @@ export default {
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'new',
+          name: '新增',
           smooth: true,
           type: 'line',
           itemStyle: {

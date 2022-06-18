@@ -10,10 +10,8 @@
             <el-row>
               <el-col :span="3" style="padding-left: 10px;">标题</el-col>
               <el-col :span="21">
-                <el-input
-                placeholder="请输入标题"
-                v-model="title">
-              </el-input></el-col>
+                <el-input v-model="title" placeholder="请输入标题" />
+              </el-col>
             </el-row>
           </el-col>
           <el-col :span="8" style="padding-left: 10px;">
@@ -37,10 +35,10 @@ import Tinymce from '@/components/Tinymce'
 import { getArticleContent, uploadArticle } from '@/api/editor'
 
 const typeOptions = [
-  { key: '1', display_name: '体育' },
-  { key: '2', display_name: '娱乐' },
-  { key: '3', display_name: '军事' },
-  { key: '4', display_name: '国际' }
+  { key: 1, display_name: '体育' },
+  { key: 2, display_name: '娱乐' },
+  { key: 3, display_name: '军事' },
+  { key: 4, display_name: '国际' }
 ]
 export default {
   name: 'TinymceDemo',
@@ -65,9 +63,10 @@ export default {
   methods: {
     async getArticleContent(id) {
       const { data } = await getArticleContent(id)
-      console.log(data)
+      const typeName = ['体育', '娱乐', '军事', '国际']
       this.content = data.content
-      this.typeId = data.type.typeId
+      this.typeId = data.typeId
+      this.typeName = typeName[data.typeId]
       this.title = data.title
     },
     async save() {

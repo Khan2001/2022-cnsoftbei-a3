@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;margin-right: 1%;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.username" placeholder="姓名" style="width: 200px;margin-right: 1%;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.role" placeholder="角色组" clearable class="filter-item" style="width: 130px;margin-right: 1%;">
         <el-option v-for="item in roleOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
-      <el-select v-model="listQuery.IdOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in IdOrderOptions" :key="item.key" :label="item.label" :value="item.key" />
+      <el-select v-model="listQuery.idOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
+        <el-option v-for="item in idOrderOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
@@ -38,10 +38,10 @@
       </el-table-column>
       <el-table-column label="注册时间" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.createDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.date | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="用户名" width="80" />
+      <el-table-column prop="username" label="用户名" width="80" />
       <el-table-column label="状态" class-name="status-col" width="80" align="center">
         <template slot-scope="{row}">
           <el-tag :type="row.status === 1 ? 'success' : 'warning'">
@@ -100,14 +100,14 @@ export default {
       list: null,
       total: 0,
       listLoading: true,
-      page: 2,
+      page: 1,
       listQuery: {
-        IdOrder: 0,
-        name: undefined,
+        idOrder: 0,
+        username: undefined,
         role: undefined
       },
       roleOptions,
-      IdOrderOptions: [{ label: '序号升序', key: 0 }, { label: '序号降序', key: 1 }]
+      idOrderOptions: [{ label: '序号升序', key: 0 }, { label: '序号降序', key: 1 }]
     }
   },
   created() {
@@ -120,7 +120,7 @@ export default {
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getUserList(this.page, params)
       this.list = data.data
-      this.total = data.userNumber
+      this.total = data.totalUsersNumber
       this.listLoading = false
     },
     /* 搜索*/

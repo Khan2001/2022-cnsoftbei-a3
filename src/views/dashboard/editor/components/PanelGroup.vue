@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             点赞数
           </div>
-          <count-to :start-val="0" :end-val="likesNumber" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="likesNumber" :duration="200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             评论数
           </div>
-          <count-to :start-val="0" :end-val="commentsNumber" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="commentsNumber" :duration="200" class="card-panel-num" />
         </div>
       </div>
     </el-col>

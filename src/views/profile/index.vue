@@ -11,7 +11,7 @@
           <el-card>
             <el-tabs v-model="activeTab">
               <el-tab-pane label="详细资料" name="account">
-                <account @get-user="getUser" :user="user" />
+                <account :user="user" @get-user="getUser" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'name',
+      'username',
       'avatar',
       'roles',
       'id',
@@ -51,7 +51,7 @@ export default {
   methods: {
     getUser() {
       this.user = {
-        name: this.name,
+        name: this.username,
         role: this.roles,
         avatar: this.avatar,
         id: this.id,

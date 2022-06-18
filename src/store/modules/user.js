@@ -6,23 +6,11 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     resetToken: getRefreshToken(),
-    newUsers: {
-      totalData: [],
-      newData: []
-    },
-    totalUsers: {
-      totalData: [],
-      newData: []
-    },
-    newArticles: {
-      totalData: [],
-      newData: []
-    },
-    totalArticles: {
-      totalData: [],
-      newData: []
-    },
-    name: '',
+    newUsers: [],
+    totalUsers: [],
+    newArticles: [],
+    totalArticles: [],
+    username: '',
     avatar: '',
     roles: [],
     id: '',
@@ -41,7 +29,6 @@ const mutations = {
   },
   SET_NEWUSERS: (state, newUsers) => {
     state.newUsers = newUsers
-    // state.newUsers.totalData = newUsers.totalData
   },
   SET_TOTALUSERS: (state, totalUsers) => {
     state.totalUsers = totalUsers
@@ -52,8 +39,8 @@ const mutations = {
   SET_TOTALARTICLES: (state, totalArticles) => {
     state.totalArticles = totalArticles
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERNAME: (state, username) => {
+    state.username = username
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -97,7 +84,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       register({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        console.log(data)
         commit('SET_TOKEN', data.accessToken)
         setToken(data.accessToken)
         setRefreshToken(data.refreshToken)
@@ -110,7 +96,6 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      console.log(state.token, 'token')
       // 模拟接口获取到的token每次都不一样
       getInfo(state.token).then(response => {
         console.log('getInfo response:', JSON.stringify(response))
@@ -120,7 +105,7 @@ const actions = {
           reject('校验失败，请重新登录')
         }
 
-        const { newUsers, totalUsers, newArticles, totalArticles, roles, name, avatar, id, date } = data
+        const { newUsers, totalUsers, newArticles, totalArticles, roles, username, avatar, id, date } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -132,7 +117,7 @@ const actions = {
         commit('SET_NEWARTICLES', newArticles)
         commit('SET_TOTALARTICLES', totalArticles)
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_USERNAME', username)
         commit('SET_AVATAR', avatar)
         commit('SET_ID', id)
         commit('SET_DATE', date)

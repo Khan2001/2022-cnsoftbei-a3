@@ -45,18 +45,30 @@ export default {
     async getLineChartData() {
       const { data } = await getInfo(this.token)
       this.LineChartData = {
-        newUsers: data.newUsers,
-        totalUsers: data.totalUsers,
-        newArticles: data.newArticles,
-        totalArticles: data.totalArticles
+        newUsers: {
+          newData: data.newUsers,
+          totalData: data.totalUsers
+        },
+        totalUsers: {
+          newData: data.newUsers,
+          totalData: data.totalUsers
+        },
+        newArticles: {
+          newData: data.newArticles,
+          totalData: data.totalArticles
+        },
+        totalArticles: {
+          newData: data.newArticles,
+          totalData: data.totalArticles
+        }
       }
       this.total = {
-        userNumber: data.userNumber,
-        articleNumber: data.articleNumber,
-        dayArticleNumber: data.dayArticleNumber,
-        dayUserNumber: data.dayUserNumber
+        userNumber: data.totalUsersNumber,
+        articleNumber: data.totalArticlesNumber,
+        dayArticleNumber: data.newArticlesNumber,
+        dayUserNumber: data.newUsersNumber
       }
-      this.$refs.chart.initChart(data.newUsers)
+      this.$refs.chart.initChart(this.LineChartData.newUsers)
     },
     handleSetLineChartData(type) {
       this.$refs.chart.initChart(this.LineChartData[type])

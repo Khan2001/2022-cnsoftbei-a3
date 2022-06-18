@@ -5,7 +5,7 @@
       <el-select v-model="listQuery.typeId" placeholder="类型" clearable class="filter-item" style="width: 130px;margin-right: 1%;">
         <el-option v-for="item in typeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
-      <el-select v-model="listQuery.IdOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
+      <el-select v-model="listQuery.idOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -38,22 +38,23 @@
       </el-table-column>
       <el-table-column label="时间" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.createDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.date | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="标题" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="details(row)">{{ row.title }}</span>
+          <el-tag>{{ row.typeId | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="作者" width="110px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.username }}</span>
         </template>
       </el-table-column>
       <el-table-column label="阅读量" align="center" width="95">
         <template slot-scope="{row}">
-          <span class="link-type">{{ row.hits }}</span>
+          <span class="link-type">{{ row.hitsNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" width="80" align="center">
@@ -164,7 +165,7 @@ export default {
       listLoading: true,
       page: 1,
       listQuery: {
-        IdOrder: 0,
+        idOrder: 0,
         title: undefined,
         typeId: undefined
       },
@@ -174,7 +175,8 @@ export default {
         id: undefined,
         content: '',
         title: '',
-        typeId: ''
+        typeId: '',
+        typeName: ''
       },
       dialogFormVisible: false,
       dialogPvVisible: false,
@@ -192,7 +194,7 @@ export default {
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getArticleList(this.page, params)
       this.list = data.data
-      this.total = data.articleNumber
+      this.total = data.totalArticlesNumber
       this.listLoading = false
     },
     handleFilter() {
@@ -220,10 +222,12 @@ export default {
     },
     async details(row) {
       const { data } = await getArticleContent({ id: row.id })
+      const typeName = ['体育', '娱乐', '军事', '国际']
       this.temp = {
         id: row.id,
         title: data.title,
-        typeId: row.type.typeId.toString(),
+        typeId: row.typeId.toString(),
+        typeName: typeName[row.typeId],
         content: data.content
       }
       this.dialogStatus = 'update'

@@ -5,8 +5,8 @@
         <div class="chart-wrapper">
           <pie-chart
             v-if="pie"
-            :type="pie && pie.type"
-            :article-number="pie && pie.articleNumber"
+            :type="pie && pie.typeId"
+            :total-articles="pie && pie.totalArticles"
           />
         </div>
       </el-col>

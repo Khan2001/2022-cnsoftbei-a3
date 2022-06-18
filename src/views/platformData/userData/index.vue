@@ -2,8 +2,8 @@
   <div class="chart-container">
     <chart
       v-if="data"
-      :new-user-number="data && data.newUserNumber"
-      :total-user-number="data && data.totalUserNumber"
+      :new-users-number="data && data.newUsersNumber"
+      :total-users-number="data && data.totalUsersNumber"
       height="100%"
       width="100%"
     />

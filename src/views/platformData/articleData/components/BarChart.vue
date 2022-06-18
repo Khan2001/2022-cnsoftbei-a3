@@ -8,6 +8,7 @@ require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
 const animationDuration = 6000
+const typeName = ['体育', '娱乐', '军事', '国际']
 
 export default {
   mixins: [resize],
@@ -23,6 +24,12 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    typeId: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     bar: {
       type: Array,
@@ -55,11 +62,11 @@ export default {
       this.bar.forEach(item => {
         series.push(
           {
-            name: item.type,
+            name: typeName[item.typeId],
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
-            data: item.typeNumber,
+            data: item.totalArticles,
             animationDuration
           }
         )
@@ -80,7 +87,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['6天前', '5天前', '4天前', '3天前', '2天前', '1天前', '今天'],
           axisTick: {
             alignWithLabel: true
           }
