@@ -137,9 +137,20 @@ export default {
       this.title = data.title
     },
     async save() {
+      console.log(this.$refs.upload.uploadFiles, '说明有文件上传了')
+      if (this.$refs.upload.uploadFiles.length > 0) {
+        console.log('这里这里')
+        this.$refs.upload.submit()
+        return
+      }
       const params = {}
       this.$omitBy(Object.assign(params, { title: this.title, id: this.id, content: this.content, typeId: this.typeId, status: 2 }))
-      const { message } = await uploadArticle(params)
+      const { message } = await uploadArticle({
+        'content': this.content,
+        'typeId': this.typeId,
+        'title': this.title,
+        'status': 2
+      })
       this.$notify({
         title: 'Success',
         message: message,
@@ -155,15 +166,13 @@ export default {
         return
       }
       const params = {}
-      this.$omitBy(Object.assign(params, { title: this.title, id: this.id, content: this.content, typeId: this.typeId, file: '123132', status: 3 }))
-      const fmData = new FormData()
-      fmData.append('content', this.content)
-      fmData.append('typeId', this.typeId)
-      fmData.append('title', this.title)
-      fmData.append('status', 3)
-      console.log(fmData)
-      // await uploadArticleFile(fmData)
-      const { message } = await uploadArticle(fmData)
+      this.$omitBy(Object.assign(params, { title: this.title, id: this.id, content: this.content, typeId: this.typeId, status: 3 }))
+      const { message } = await uploadArticle({
+        'content': this.content,
+        'typeId': this.typeId,
+        'title': this.title,
+        'status': 3
+      })
       this.$notify({
         title: 'Success',
         message: message,

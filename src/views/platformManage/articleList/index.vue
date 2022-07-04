@@ -153,7 +153,8 @@ export default {
       const statusMap = {
         '0': '封禁',
         '1': '发布',
-        '2': '待审'
+        '2': '草稿',
+        '3': '待审'
       }
       return statusMap[status]
     },

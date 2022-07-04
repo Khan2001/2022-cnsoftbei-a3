@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { resetRouter } from './router/index'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -31,6 +32,7 @@ router.beforeEach(async(to, from, next) => {
       try {
         const { roles } = await store.dispatch('user/getInfo')
         console.log(roles, 123123)
+        resetRouter() // 重置路由
         const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
         router.options.routes = store.getters.permission_routes

@@ -152,7 +152,8 @@ const actions = {
   refreshToken({ commit }) {
     return new Promise((resolve, reject) => {
       // axios.get('',{})
-      axios.get('http://39.99.60.47/token/refreshToken', {
+      // 'http://39.99.60.47/token/refreshToken'
+      axios.get(process.env.VUE_APP_BASE_API + 'token/refreshToken', {
         params: { refreshToken: getRefreshToken() }}
       )
         .then(response => {

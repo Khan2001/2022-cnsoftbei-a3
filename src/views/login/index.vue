@@ -41,7 +41,8 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:45%;margin-bottom:30px;margin-left:5%;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="info" style="width:45%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册并登录</el-button>
 
       <div class="tips">
         <span style="margin-right:20px;">用户名：admin</span>
