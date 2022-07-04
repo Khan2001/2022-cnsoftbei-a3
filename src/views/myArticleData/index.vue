@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.title" placeholder="标题" style="width: 200px;margin-right: 1%;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.typeId" placeholder="类型" clearable class="filter-item" style="width: 130px;margin-right: 1%;">
-        <el-option v-for="item in roleOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+        <el-option v-for="item in typeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
       </el-select>
       <el-select v-model="listQuery.idOrder" style="width: 140px;margin-right: 1%;" class="filter-item" @change="handleFilter">
         <el-option v-for="item in idOrderOptions" :key="item.key" :label="item.label" :value="item.key" />
@@ -41,7 +41,7 @@
           <span>{{ row.date | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="标题" min-width="150px">
+      <el-table-column label="标题" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span class="link-type" @click="edit(row)">{{ row.title }}</span>
           <el-tag>{{ row.typeId | typeFilter }}</el-tag>
@@ -92,8 +92,14 @@ import Pagination from '@/components/Pagination' // secondary package based on e
 const typeOptions = [
   { key: '1', display_name: '体育' },
   { key: '2', display_name: '娱乐' },
-  { key: '3', display_name: '军事' },
-  { key: '4', display_name: '国际' }
+  { key: '3', display_name: '家居' },
+  { key: '4', display_name: '房产' },
+  { key: '5', display_name: '教育' },
+  { key: '6', display_name: '时尚' },
+  { key: '7', display_name: '时政' },
+  { key: '8', display_name: '游戏' },
+  { key: '9', display_name: '科技' },
+  { key: '10', display_name: '财经' }
 ]
 
 const calendarTypeKeyValue = typeOptions.reduce((acc, cur) => {
@@ -145,8 +151,8 @@ export default {
       const params = {}
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getArticleList(this.page, params)
-      this.list = data.data
-      this.total = data.totalArticlesNumber
+      this.list = data.data.articles
+      this.total = data.data.totalArticlesNumber
       this.listLoading = false
     },
     /* 搜索*/

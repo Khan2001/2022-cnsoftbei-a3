@@ -90,7 +90,7 @@ export const asyncRoutes = [
     meta: {
       title: '平台数据', // 显示的名字
       icon: 'el-icon-s-data', // 图标
-      roles: ['admin']
+      roles: ['ROLE_admin']
     },
     children: [{ // 子项
       path: 'userData',
@@ -121,7 +121,7 @@ export const asyncRoutes = [
     meta: {
       title: '平台管理',
       icon: 'el-icon-menu',
-      roles: ['admin']
+      roles: ['ROLE_admin']
     },
     children: [{
       path: 'userList',
@@ -156,7 +156,7 @@ export const asyncRoutes = [
       meta: {
         title: '文章数据',
         icon: 'el-icon-s-data',
-        roles: ['editor']
+        roles: ['ROLE_editor']
       }
     }]
   },
@@ -173,7 +173,7 @@ export const asyncRoutes = [
       meta: {
         title: '编辑文章',
         icon: 'el-icon-menu',
-        roles: ['editor']
+        roles: ['ROLE_editor']
       }
     }]
   },

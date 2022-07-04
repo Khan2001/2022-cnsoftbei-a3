@@ -40,7 +40,6 @@ export default {
     chartData: {
       deep: true,
       handler(val) {
-        console.log('val', val)
         this.setOptions(val)
       }
     }
@@ -60,11 +59,7 @@ export default {
   methods: {
     initChart(data) {
       this.chart = echarts.init(this.$el, 'macarons')
-      if (data) {
-        this.setOptions(data)
-      } else {
-        console.log('%c开发提示：没有收到图表数据', 'color:green')
-      }
+      this.setOptions(data)
     },
     setOptions({ totalData, newData } = {}) {
       this.chart.setOption({

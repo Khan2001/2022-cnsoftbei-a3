@@ -8,7 +8,7 @@ require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
 const animationDuration = 6000
-const typeName = ['体育', '娱乐', '军事', '国际']
+const typeName = ['体育', '娱乐', '家居', '房产', '教育', '时尚', '时政', '游戏', '科技', '财经']
 
 export default {
   mixins: [resize],

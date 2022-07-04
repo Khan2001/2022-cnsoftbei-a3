@@ -71,6 +71,7 @@ export default {
           this.listObj[objKeyArr[i]].hasSuccess = true
           return
         }
+        console.log(response)
       }
     },
     handleRemove(file) {

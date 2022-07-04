@@ -31,25 +31,25 @@
           {{ (scope.$index+1) }}
         </template>
       </el-table-column>
-      <el-table-column label="id" prop="id" align="center">
+      <el-table-column label="id" prop="id" width="300px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="注册时间" width="150px" align="center">
+      <el-table-column label="注册时间" width="300px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.date | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="用户名" width="80" />
-      <el-table-column label="状态" class-name="status-col" width="80" align="center">
+      <el-table-column prop="username" label="用户名" width="150" align="center" />
+      <el-table-column label="状态" class-name="status-col" width="180" align="center">
         <template slot-scope="{row}">
           <el-tag :type="row.status === 1 ? 'success' : 'warning'">
             {{ row.status | statusFilter }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button type="warning" :disabled="row.status === 0" size="mini" @click="handleModifyStatus(row, 0)">
             封禁
@@ -119,8 +119,8 @@ export default {
       const params = {}
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getUserList(this.page, params)
-      this.list = data.data
-      this.total = data.totalUsersNumber
+      this.list = data.data.users
+      this.total = data.data.totalUsersNumber
       this.listLoading = false
     },
     /* 搜索*/

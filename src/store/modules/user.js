@@ -1,15 +1,23 @@
-import { login, logout, getInfo, register } from '@/api/user'
-import { getToken, setToken, removeToken, getRefreshToken, setRefreshToken, removeRefreshToken } from '@/utils/auth'
+import { login, logout, getInfo, register, refreshToken } from '@/api/user'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  getRefreshToken,
+  setRefreshToken,
+  removeRefreshToken,
+  setRoles, removeRoles
+} from '@/utils/auth'
 import { resetRouter } from '@/router'
+import jwt from 'jsonwebtoken'
+import axios from 'axios'
+import { Message } from 'element-ui'
+import store from '@/store'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     resetToken: getRefreshToken(),
-    newUsers: [],
-    totalUsers: [],
-    newArticles: [],
-    totalArticles: [],
     username: '',
     avatar: '',
     roles: [],
@@ -26,18 +34,6 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token
-  },
-  SET_NEWUSERS: (state, newUsers) => {
-    state.newUsers = newUsers
-  },
-  SET_TOTALUSERS: (state, totalUsers) => {
-    state.totalUsers = totalUsers
-  },
-  SET_NEWARTICLES: (state, newArticles) => {
-    state.newArticles = newArticles
-  },
-  SET_TOTALARTICLES: (state, totalArticles) => {
-    state.totalArticles = totalArticles
   },
   SET_USERNAME: (state, username) => {
     state.username = username
@@ -71,8 +67,11 @@ const actions = {
         }
         commit('SET_TOKEN', data.accessToken)
         // dispatch('dashboard/getDashboardData', {}, { root: true })
+        const roles = jwt.decode(data.accessToken).authorities[0]
+        setRoles(roles)
+        commit('SET_ROLES', roles)
         setToken(data.accessToken)
-        setRefreshToken(data.resetToken)
+        setRefreshToken(data.refreshToken)
         resolve()
       }).catch(error => {
         reject(error)
@@ -96,8 +95,7 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      // 模拟接口获取到的token每次都不一样
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
         console.log('getInfo response:', JSON.stringify(response))
         const { data } = response
 
@@ -105,17 +103,13 @@ const actions = {
           reject('校验失败，请重新登录')
         }
 
-        const { newUsers, totalUsers, newArticles, totalArticles, roles, username, avatar, id, date } = data
+        const { roles, username, avatar, id, date } = data
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
 
-        commit('SET_NEWUSERS', newUsers)
-        commit('SET_TOTALUSERS', totalUsers)
-        commit('SET_NEWARTICLES', newArticles)
-        commit('SET_TOTALARTICLES', totalArticles)
         commit('SET_ROLES', roles)
         commit('SET_USERNAME', username)
         commit('SET_AVATAR', avatar)
@@ -133,7 +127,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         removeToken() // must remove  token  first
+        removeRefreshToken()
         resetRouter()
+        removeRoles()
         commit('RESET_STATE')
         resolve()
       }).catch(error => {
@@ -148,9 +144,58 @@ const actions = {
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken()
+      removeRefreshToken()
+      // removeRoles()
       resolve()
     })
+  },
+  refreshToken({ commit }) {
+    return new Promise((resolve, reject) => {
+      // axios.get('',{})
+      axios.get('http://39.99.60.47/token/refreshToken', {
+        params: { refreshToken: getRefreshToken() }}
+      )
+        .then(response => {
+          if (response.data.code === 4003) {
+            /* MessageBox.confirm('登录已失效，点击取消留在此界面或再次登录', '确认登出', {
+              confirmButtonText: '重新登录',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              store.dispatch('user/resetToken').then(() => {
+                location.reload()
+              })
+            }) */
+            Message.warning('登录已过期')
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
+            reject(response.data.message)
+          }
+          const { data } = response.data
+          console.log(data)
+          setToken(data.accessToken)
+          commit('SET_TOKEN', data.accessToken)
+          setRefreshToken(data.refreshToken)
+          commit('RESET_STATE')
+          resolve()
+        })
+        .catch(err => {
+          reject(err)
+        })
+      /* refreshToken({ refreshToken: getRefreshToken() }).then(response => {
+        const { data } = response
+        setToken(data.accessToken)
+        commit('SET_TOKEN', data.accessToken)
+        setRefreshToken(data.refreshToken)
+        commit('RESET_STATE')
+        resolve()
+      }).catch(error => {
+        reject(error)
+      }) */
+    })
   }
+
 }
 
 export default {

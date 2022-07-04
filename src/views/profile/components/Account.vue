@@ -18,6 +18,7 @@
       :key="imagecropperKey"
       :width="300"
       :height="300"
+      url="/index/avatar"
       lang-type="en"
       @close="close"
       @crop-success="returnImg"
@@ -28,7 +29,8 @@
 
 <script>
 import ImageCropper from '@/components/ImageCropper'
-import { updateAvatar, updateInfo } from '@/api/user'
+import { updateInfo } from '@/api/user'
+import store from '@/store'
 
 export default {
   name: 'AvatarUpload',
@@ -58,26 +60,29 @@ export default {
         return
       }
       const { message } = await updateInfo({
-        name: this.user.name,
+        username: this.user.name,
         password: this.user.password
       })
       this.$emit('get-user')
       this.$message.success(message)
     },
-    cropSuccess(resData) {
+    async cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      this.image = resData.files.avatar
-      console.log(this.image)
+      if (resData.success) {
+        this.$message.success('修改成功！')
+        await store.dispatch('user/getInfo')
+      }
+      this.$emit('get-user')
     },
     async returnImg(res) {
-      const index = res.indexOf(',')
-      const img = res.substr(index + 1, res.length)
-      console.log(img)
-      const { data } = await updateAvatar({
-        avatar: img
-      })
-      console.log(data)
+      /* const index = res.indexOf(',')
+      const img = res.substr(index + 1, res.length) */
+
+      // const { data } = await updateAvatar({
+      //   avatar: img
+      // })
+      // console.log(data)
     },
     close() {
       this.imagecropperShow = false

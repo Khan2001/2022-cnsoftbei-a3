@@ -5,8 +5,7 @@
       :likes-number="total && total.likesNumber"
       :hits-number="total && total.hitsNumber"
       :comments-number="total && total.commentsNumber"
-      @handleSetLineChartData="handleSetLineChartData"
-    />
+      @handleSetLineChartData="handleSetLineChartData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-top:32px;">
       <line-chart v-if="data.hits" :chart-data="lineChartData" />
@@ -42,9 +41,18 @@ export default {
   methods: {
     async init() {
       const { data } = await editorInfo()
-      this.data.hits = data.hits
-      this.data.comments = data.comments
-      this.data.likes = data.likes
+      this.data.hits = {
+        newData: data.newHitsData,
+        totalData: data.totalHitsData
+      }
+      this.data.comments = {
+        newData: data.newCommentsData,
+        totalData: data.totalCommentsData
+      }
+      this.data.likes = {
+        newData: data.newLikesData,
+        totalData: data.totalLikesData
+      }
       this.total = {
         hitsNumber: data.hitsNumber,
         likesNumber: data.likesNumber,

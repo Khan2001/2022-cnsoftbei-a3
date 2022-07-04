@@ -798,7 +798,9 @@ export default {
       })
         .then(resData => {
           this.loading = 2
-          this.$emit('crop-upload-success', resData.data)
+          // this.$emit('crop-upload-success', resData.data)
+          this.$emit('crop-upload-success', resData)
+          // 2022/7/2
         })
         .catch(err => {
           if (this.value) {

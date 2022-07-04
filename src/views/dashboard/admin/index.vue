@@ -72,7 +72,6 @@ export default {
     },
     handleSetLineChartData(type) {
       this.$refs.chart.initChart(this.LineChartData[type])
-      /* console.log('handleSetLineChartData(type) this.LineChartData', this.LineChartData)*/
     }
   }
 }

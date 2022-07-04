@@ -129,10 +129,15 @@ import Pagination from '@/components/Pagination'
 const typeOptions = [
   { key: '1', display_name: '体育' },
   { key: '2', display_name: '娱乐' },
-  { key: '3', display_name: '军事' },
-  { key: '4', display_name: '国际' }
+  { key: '3', display_name: '家居' },
+  { key: '4', display_name: '房产' },
+  { key: '5', display_name: '教育' },
+  { key: '6', display_name: '时尚' },
+  { key: '7', display_name: '时政' },
+  { key: '8', display_name: '游戏' },
+  { key: '9', display_name: '科技' },
+  { key: '10', display_name: '财经' }
 ]
-
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = typeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
@@ -193,8 +198,8 @@ export default {
       const params = {}
       this.listQuery = this.$omitBy(Object.assign(params, this.listQuery))
       const data = await getArticleList(this.page, params)
-      this.list = data.data
-      this.total = data.totalArticlesNumber
+      this.list = data.data.articles
+      this.total = data.data.totalArticlesNumber
       this.listLoading = false
     },
     handleFilter() {
@@ -222,7 +227,7 @@ export default {
     },
     async details(row) {
       const { data } = await getArticleContent({ id: row.id })
-      const typeName = ['体育', '娱乐', '军事', '国际']
+      const typeName = ['体育', '娱乐', '家居', '房产', '教育', '时尚', '时政', '游戏', '科技', '财经']
       this.temp = {
         id: row.id,
         title: data.title,

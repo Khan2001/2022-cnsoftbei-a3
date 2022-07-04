@@ -44,8 +44,10 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">用户名：admin/editor</span>
-        <span> 密码：任意</span>
+        <span style="margin-right:20px;">用户名：admin</span>
+        <span> 密码：123456</span><br>
+        <span style="margin-right:30px;">用户名：张三</span>
+        <span> 密码：zhangsan123</span>
       </div>
 
     </el-form>
@@ -120,6 +122,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          console.log('this.loginForm', this.loginForm)
           this.$store.dispatch('user/login', this.loginForm)
             .then((res) => {
               // 当状态码不为2007时，res可能不存在

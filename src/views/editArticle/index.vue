@@ -5,6 +5,50 @@
     </div>
     <el-row class="panel">
       <el-col :span="16">
+        <!--        <el-upload
+          class="upload-demo"
+          action="http://39.99.60.47/editor/uploadArticle/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :headers="headers"
+          :data="{
+            typeId: this.typeId,
+            title: this.title,
+            status: 3
+          }"
+          :before-remove="beforeRemove"
+          multiple
+          accept=".doc,.docx,.txt"
+          :limit="1"
+          :auto-upload="false"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+          :http-request="update"
+          @on-change="update"
+          @submit="update"
+        >
+          <el-button size="small" type="primary">上传已有文章</el-button>
+          &lt;!&ndash;      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>&ndash;&gt;
+        </el-upload>-->
+
+        <el-upload
+          ref="upload"
+          class="upload-demo"
+          action="#"
+          :http-request="update"
+          accept=".doc,.docx,.txt"
+          :limit="1"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :file-list="fileList"
+          :auto-upload="false"
+        >
+          <el-button slot="trigger" size="small" type="primary">上传已有文章</el-button>
+        </el-upload>
+      </el-col>
+    </el-row>
+    <el-row class="panel">
+      <el-col :span="16">
         <el-row>
           <el-col :span="16">
             <el-row>
@@ -32,22 +76,33 @@
 
 <script>
 import Tinymce from '@/components/Tinymce'
-import { getArticleContent, uploadArticle } from '@/api/editor'
+import { getArticleContent, uploadArticle, uploadArticleFile } from '@/api/editor'
+import { getToken } from '@/utils/auth'
 
 const typeOptions = [
   { key: 1, display_name: '体育' },
   { key: 2, display_name: '娱乐' },
-  { key: 3, display_name: '军事' },
-  { key: 4, display_name: '国际' }
+  { key: 3, display_name: '家居' },
+  { key: 4, display_name: '房产' },
+  { key: 5, display_name: '教育' },
+  { key: 6, display_name: '时尚' },
+  { key: 7, display_name: '时政' },
+  { key: 8, display_name: '游戏' },
+  { key: 9, display_name: '科技' },
+  { key: 10, display_name: '财经' }
 ]
 export default {
   name: 'TinymceDemo',
   components: { Tinymce },
   data() {
     return {
+      headers: {
+        token: getToken()
+      },
       id: this.$route.query.id,
       typeId: undefined,
       title: undefined,
+      fileList: [],
       content:
       `<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1><p style="text-align: center; font-size: 15px;"><ul>
         <li>Our <a href="//www.tinymce.com/docs/">documentation</a> is a great resource for learning how to configure TinyMCE.</li><li>Have a specific question? Visit the <a href="https://community.tinymce.com/forum/">Community Forum</a>.</li><li>We also offer enterprise grade support as part of <a href="https://tinymce.com/pricing">TinyMCE premium subscriptions</a>.</li>
@@ -57,13 +112,25 @@ export default {
   },
   created() {
     if (this.id) {
-      this.getArticleContent()
+      console.log(this.id)
+      this.getContent(this.id)
     }
   },
   methods: {
-    async getArticleContent(id) {
-      const { data } = await getArticleContent(id)
-      const typeName = ['体育', '娱乐', '军事', '国际']
+    async update(file) {
+      console.log(file)
+      const fmData = new FormData()
+      fmData.append('file', file.file)
+      fmData.append('typeId', this.typeId)
+      fmData.append('title', this.title)
+      fmData.append('status', 3)
+      console.log(fmData)
+      await uploadArticleFile(fmData)
+      this.$message.success('上传成功!')
+    },
+    async getContent(id) {
+      const { data } = await getArticleContent({ id: id })
+      const typeName = ['体育', '娱乐', '家居', '房产', '教育', '时尚', '时政', '游戏', '科技', '财经']
       this.content = data.content
       this.typeId = data.typeId
       this.typeName = typeName[data.typeId]
@@ -81,15 +148,40 @@ export default {
       })
     },
     async release() {
+      console.log(this.$refs.upload.uploadFiles, '说明有文件上传了')
+      if (this.$refs.upload.uploadFiles.length > 0) {
+        console.log('这里这里')
+        this.$refs.upload.submit()
+        return
+      }
       const params = {}
-      this.$omitBy(Object.assign(params, { title: this.title, id: this.id, content: this.content, typeId: this.typeId, status: 3 }))
-      const { message } = await uploadArticle(params)
+      this.$omitBy(Object.assign(params, { title: this.title, id: this.id, content: this.content, typeId: this.typeId, file: '123132', status: 3 }))
+      const fmData = new FormData()
+      fmData.append('content', this.content)
+      fmData.append('typeId', this.typeId)
+      fmData.append('title', this.title)
+      fmData.append('status', 3)
+      console.log(fmData)
+      // await uploadArticleFile(fmData)
+      const { message } = await uploadArticle(fmData)
       this.$notify({
         title: 'Success',
         message: message,
         type: 'success',
         duration: 2000
       })
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
     }
   }
 }

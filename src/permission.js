@@ -27,33 +27,24 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       // determine whether the user has obtained his permission roles through getInfo
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      if (hasRoles) {
+      // const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      try {
+        const { roles } = await store.dispatch('user/getInfo')
+        console.log(roles, 123123)
+        const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+        router.options.routes = store.getters.permission_routes
+        router.addRoutes(accessRoutes)
         next()
-      } else {
-        try {
-          // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
-          console.log(roles, 123123)
-          // generate accessible routes map based on roles
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-          router.options.routes = store.getters.permission_routes
-          // dynamically add accessible routes
-          router.addRoutes(accessRoutes)
-
-          // hack method to ensure that addRoutes is complete
-          // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
-        } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          console.log(error)
-          // Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
-          NProgress.done()
-        }
+        NProgress.done()
+        /* next({ ...to, replace: true }) */
+      } catch (error) {
+        // remove token and go to login page to re-login
+        await store.dispatch('user/resetToken')
+        console.error(error)
+        // Message.error(error || 'Has Error')
+        next(`/login?redirect=${to.path}`)
+        NProgress.done()
       }
     }
   } else {

@@ -2,26 +2,25 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
-
 // request interceptor
 service.interceptors.request.use(
   config => {
     // do something before request is sent
     config.headers['Access-Control-Allow-Origin'] = '*'
-    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
+    /* config.headers['Content-Type'] = 'application/json;charset=UTF-8' */
+    // config.headers['Content-Type'] = 'multipart/form-data;charset=UTF-8'
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       // config.headers['X-Token'] = getToken()
-      config.headers['Authorization'] = 'Authorization' + getToken()
+      config.headers['token'] = getToken()
     }
     return config
   },
@@ -46,22 +45,20 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code === 2007) {
-      return res
-    }
+    // if (res.code === 2007) {
+    //   return res
+    // }
     if (res.code !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 2009 || res.code === 2002 || res.code === 4003 || res.code === 2006) {
         // to re-login
-        console.log(this.$route.path)
+        console.log(this)
         if (this.$route.path !== '/login') {
           MessageBox.confirm('登录已失效，点击取消留在此界面或再次登录', '确认登出', {
             confirmButtonText: '重新登录',
@@ -76,6 +73,9 @@ service.interceptors.response.use(
       }
       if (res.code === 4002) {
         // 刷新token操作
+        store.dispatch('user/refreshToken').then(() => {
+          location.reload()
+        })
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {

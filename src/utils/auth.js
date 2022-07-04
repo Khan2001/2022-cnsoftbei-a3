@@ -26,3 +26,15 @@ export function setRefreshToken(token) {
 export function removeRefreshToken() {
   return Cookies.remove(RefreshTokenKey)
 }
+
+export function setRoles(roles) {
+  return Cookies.set('roles', roles)
+}
+
+export function getRoles() {
+  return Cookies.get('roles')
+}
+
+export function removeRoles() {
+  return Cookies.remove('roles')
+}
