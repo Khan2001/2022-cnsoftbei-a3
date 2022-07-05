@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export const getArticleList = (page, params) => request.get(`/admin/articleList/${page}`, { params })
-// export const getArticleContent = params => request.get('/admin/articleContent', params)
+
 export function getArticleContent(data) {
   return request({
     url: '/admin/articleContent',
@@ -11,7 +11,7 @@ export function getArticleContent(data) {
     }
   })
 }
-// export const articleStatusChange = params => request.post('/admin/articleStatusChange', params)
+
 export function articleStatusChange(data) {
   return request({
     url: '/admin/articleStatusChange',
@@ -22,18 +22,18 @@ export function articleStatusChange(data) {
     }
   })
 }
-// export const articleTypeChange = params => request.post('/admin/articleTypeChange', params)
+
 export function articleTypeChange(data) {
   return request({
     url: '/admin/articleTypeChange',
-    method: 'post',
+    method: 'put',
     params: {
       'id': data.id,
       'typeId': data.typeId
     }
   })
 }
-// export const articleDelete = params => request.delete('/admin/articleDelete', params)
+
 export function articleDelete(data) {
   return request({
     url: '/admin/articleDelete',

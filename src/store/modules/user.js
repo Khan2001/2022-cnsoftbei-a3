@@ -1,4 +1,4 @@
-import { login, logout, getInfo, register, refreshToken } from '@/api/user'
+import { login, logout, getInfo, register } from '@/api/user'
 import {
   getToken,
   setToken,
@@ -57,16 +57,13 @@ const actions = {
   login({ commit, dispatch }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      /* console.log('action before login userInfo:', JSON.stringify(userInfo))*/
       login({ username: username.trim(), password: password }).then(response => {
-        /* console.log('login response:', JSON.stringify(response))*/
         const { data } = response
         if (response.code === 2007) {
           resolve(response)
           return
         }
         commit('SET_TOKEN', data.accessToken)
-        // dispatch('dashboard/getDashboardData', {}, { root: true })
         const roles = jwt.decode(data.accessToken).authorities[0]
         setRoles(roles)
         commit('SET_ROLES', roles)
@@ -96,7 +93,6 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        console.log('getInfo response:', JSON.stringify(response))
         const { data } = response
 
         if (!data) {
@@ -151,22 +147,11 @@ const actions = {
   },
   refreshToken({ commit }) {
     return new Promise((resolve, reject) => {
-      // axios.get('',{})
-      // 'http://39.99.60.47/token/refreshToken'
       axios.get(process.env.VUE_APP_BASE_API + 'token/refreshToken', {
         params: { refreshToken: getRefreshToken() }}
       )
         .then(response => {
           if (response.data.code === 4003) {
-            /* MessageBox.confirm('登录已失效，点击取消留在此界面或再次登录', '确认登出', {
-              confirmButtonText: '重新登录',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              store.dispatch('user/resetToken').then(() => {
-                location.reload()
-              })
-            }) */
             Message.warning('登录已过期')
             store.dispatch('user/resetToken').then(() => {
               location.reload()
@@ -174,7 +159,6 @@ const actions = {
             reject(response.data.message)
           }
           const { data } = response.data
-          console.log(data)
           setToken(data.accessToken)
           commit('SET_TOKEN', data.accessToken)
           setRefreshToken(data.refreshToken)
@@ -184,16 +168,6 @@ const actions = {
         .catch(err => {
           reject(err)
         })
-      /* refreshToken({ refreshToken: getRefreshToken() }).then(response => {
-        const { data } = response
-        setToken(data.accessToken)
-        commit('SET_TOKEN', data.accessToken)
-        setRefreshToken(data.refreshToken)
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      }) */
     })
   }
 

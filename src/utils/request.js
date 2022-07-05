@@ -13,8 +13,6 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
     config.headers['Access-Control-Allow-Origin'] = '*'
-    /* config.headers['Content-Type'] = 'application/json;charset=UTF-8' */
-    // config.headers['Content-Type'] = 'multipart/form-data;charset=UTF-8'
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -55,7 +53,6 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 2009 || res.code === 2002 || res.code === 4003 || res.code === 2006) {
         // to re-login
         console.log(this)

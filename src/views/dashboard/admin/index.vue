@@ -44,6 +44,10 @@ export default {
   methods: {
     async getLineChartData() {
       const { data } = await getInfo(this.token)
+      data.newUsers = data.newUsers.reverse()
+      data.totalUsers = data.totalUsers.reverse()
+      data.newArticles = data.newArticles.reverse()
+      data.totalArticles = data.totalArticles.reverse()
       this.LineChartData = {
         newUsers: {
           newData: data.newUsers,
@@ -62,6 +66,8 @@ export default {
           totalData: data.totalArticles
         }
       }
+      console.log()
+      console.log('this.LineChartData', this.LineChartData)
       this.total = {
         userNumber: data.totalUsersNumber,
         articleNumber: data.totalArticlesNumber,

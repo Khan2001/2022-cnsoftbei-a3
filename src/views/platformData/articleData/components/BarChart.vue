@@ -7,7 +7,7 @@ import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
-const animationDuration = 6000
+const animationDuration = 3000
 const typeName = ['体育', '娱乐', '家居', '房产', '教育', '时尚', '时政', '游戏', '科技', '财经']
 
 export default {
@@ -66,7 +66,7 @@ export default {
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
-            data: item.totalArticles,
+            data: item.totalArticles.reverse(),
             animationDuration
           }
         )

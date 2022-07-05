@@ -14,28 +14,6 @@ export function login(data) {
   })
 }
 
-// export function getInfo(token) {
-//   console.log('getInfo token:', token)
-//   // 这里的if不能用token作为条件
-//   if (token === 'admin-token') {
-//     return request({
-//       url: '/index/admin',
-//       method: 'get',
-//       params: { token }
-//       // url: '/index/admin/dashboard',
-//       // method: 'get',
-//       // params: { token }
-//     })
-//   }
-//   if (token === 'editor-token') {
-//     return request({
-//       url: '/index/editor',
-//       method: 'get',
-//       params: { token }
-//     })
-//   }
-// }
-
 export function getInfo() {
   if (store.getters.roles === 'ROLE_admin' || roles === 'ROLE_admin') {
     return request({
@@ -57,8 +35,6 @@ export function logout() {
   })
 }
 
-/* 更简洁的封装方法*/
-// export const updateInfo = params => request.post('/index/profile', params)
 export function updateInfo(data) {
   return request({
     url: '/index/profile',
@@ -69,9 +45,11 @@ export function updateInfo(data) {
     }
   })
 }
+
 export const updateAvatar = params => request.post('/index/avatar', params)
+
 export const getUserList = (page, params) => request.get(`/admin/userList/${page}`, { params })
-// export const userStatus = params => request.put('/admin/userStatusChange', params)
+
 export function userStatus(data) {
   return request({
     url: '/admin/userStatusChange',
@@ -82,7 +60,7 @@ export function userStatus(data) {
     }
   })
 }
-// export const userDelete = params => request.delete('/admin/userDelete', params)
+
 export function userDelete(data) {
   return request({
     url: '/admin/userDelete',
@@ -92,7 +70,7 @@ export function userDelete(data) {
     }
   })
 }
-// export const register = params => request.post('/index/register', params)
+
 export function register(data) {
   return request({
     url: '/index/register',
@@ -103,4 +81,5 @@ export function register(data) {
     }
   })
 }
+
 export const refreshToken = params => request.get('/token/refreshToken', { params })

@@ -260,6 +260,7 @@ export default {
         })
       }
       this.dialogFormVisible = false
+      await this.getList()
     },
     async handleDelete(row) {
       const data = await articleDelete({ id: row.id })

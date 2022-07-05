@@ -1,6 +1,5 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
@@ -31,7 +30,6 @@ router.beforeEach(async(to, from, next) => {
       // const hasRoles = store.getters.roles && store.getters.roles.length > 0
       try {
         const { roles } = await store.dispatch('user/getInfo')
-        console.log(roles, 123123)
         resetRouter() // 重置路由
         const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
@@ -39,12 +37,10 @@ router.beforeEach(async(to, from, next) => {
         router.addRoutes(accessRoutes)
         next()
         NProgress.done()
-        /* next({ ...to, replace: true }) */
       } catch (error) {
         // remove token and go to login page to re-login
         await store.dispatch('user/resetToken')
         console.error(error)
-        // Message.error(error || 'Has Error')
         next(`/login?redirect=${to.path}`)
         NProgress.done()
       }

@@ -5,32 +5,6 @@
     </div>
     <el-row class="panel">
       <el-col :span="16">
-        <!--        <el-upload
-          class="upload-demo"
-          action="http://39.99.60.47/editor/uploadArticle/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :headers="headers"
-          :data="{
-            typeId: this.typeId,
-            title: this.title,
-            status: 3
-          }"
-          :before-remove="beforeRemove"
-          multiple
-          accept=".doc,.docx,.txt"
-          :limit="1"
-          :auto-upload="false"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
-          :http-request="update"
-          @on-change="update"
-          @submit="update"
-        >
-          <el-button size="small" type="primary">上传已有文章</el-button>
-          &lt;!&ndash;      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>&ndash;&gt;
-        </el-upload>-->
-
         <el-upload
           ref="upload"
           class="upload-demo"
@@ -104,27 +78,22 @@ export default {
       title: undefined,
       fileList: [],
       content:
-      `<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1><p style="text-align: center; font-size: 15px;"><ul>
-        <li>Our <a href="//www.tinymce.com/docs/">documentation</a> is a great resource for learning how to configure TinyMCE.</li><li>Have a specific question? Visit the <a href="https://community.tinymce.com/forum/">Community Forum</a>.</li><li>We also offer enterprise grade support as part of <a href="https://tinymce.com/pricing">TinyMCE premium subscriptions</a>.</li>
-      </ul>`,
+      `<p>在这里编辑内容</p>`,
       typeOptions
     }
   },
   created() {
     if (this.id) {
-      console.log(this.id)
       this.getContent(this.id)
     }
   },
   methods: {
     async update(file) {
-      console.log(file)
       const fmData = new FormData()
       fmData.append('file', file.file)
       fmData.append('typeId', this.typeId)
       fmData.append('title', this.title)
       fmData.append('status', 3)
-      console.log(fmData)
       await uploadArticleFile(fmData)
       this.$message.success('上传成功!')
     },
@@ -137,9 +106,7 @@ export default {
       this.title = data.title
     },
     async save() {
-      console.log(this.$refs.upload.uploadFiles, '说明有文件上传了')
       if (this.$refs.upload.uploadFiles.length > 0) {
-        console.log('这里这里')
         this.$refs.upload.submit()
         return
       }
@@ -159,9 +126,7 @@ export default {
       })
     },
     async release() {
-      console.log(this.$refs.upload.uploadFiles, '说明有文件上传了')
       if (this.$refs.upload.uploadFiles.length > 0) {
-        console.log('这里这里')
         this.$refs.upload.submit()
         return
       }

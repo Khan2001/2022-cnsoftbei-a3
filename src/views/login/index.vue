@@ -123,7 +123,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log('this.loginForm', this.loginForm)
           this.$store.dispatch('user/login', this.loginForm)
             .then((res) => {
               // 当状态码不为2007时，res可能不存在
@@ -150,8 +149,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
 $light_gray:#fff;
