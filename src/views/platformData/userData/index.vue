@@ -2,8 +2,8 @@
   <div class="chart-container">
     <chart
       v-if="data"
-      :new-users-number="data && data.newUsersNumber.reverse()"
-      :total-users-number="data && data.totalUsersNumber.reverse()"
+      :new-users-number="data && data.newUsersNumber"
+      :total-users-number="data && data.totalUsersNumber"
       height="100%"
       width="100%"
     />
@@ -29,7 +29,10 @@ export default {
   methods: {
     async init() {
       const { data } = await userData()
-      this.data = data
+      this.data = {
+        'totalUsersNumber': data.totalUsersNumber.reverse(),
+        'newUsersNumber': data.newUsersNumber.reverse()
+      }
     }
   }
 }

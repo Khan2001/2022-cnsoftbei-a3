@@ -62,7 +62,7 @@ export default {
       this.bar.forEach(item => {
         series.push(
           {
-            name: typeName[item.typeId],
+            name: typeName[item.typeId - 1],
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',

@@ -66,8 +66,6 @@ export default {
           totalData: data.totalArticles
         }
       }
-      console.log()
-      console.log('this.LineChartData', this.LineChartData)
       this.total = {
         userNumber: data.totalUsersNumber,
         articleNumber: data.totalArticlesNumber,
