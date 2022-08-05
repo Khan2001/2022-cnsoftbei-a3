@@ -1,0 +1,3701 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "cnsoftbei",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "服务端"
+    },
+    {
+      "name": "通用接口"
+    },
+    {
+      "name": "客户端"
+    }
+  ],
+  "paths": {
+    "/admin/userData": {
+      "get": {
+        "summary": "admin平台数据/用户数据",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "对应界面平台数据/用户数据platformData/userData\n柱状图用totalUsersNumber，12个数对应12个month\n折线图用newUsersNumber，12个数对应12个month",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalUsersNumber": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 12,
+                          "maxItems": 12
+                        },
+                        "newUsersNumber": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 12,
+                          "maxItems": 12
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "totalUsersNumber",
+                        "newUsersNumber"
+                      ],
+                      "required": [
+                        "totalUsersNumber",
+                        "newUsersNumber"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/editor": {
+      "get": {
+        "summary": "editor信息",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "admin-token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "hitsNumber": {
+                          "type": "integer"
+                        },
+                        "likesNumber": {
+                          "type": "integer"
+                        },
+                        "commentsNumber": {
+                          "type": "integer"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "roles": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        },
+                        "date": {
+                          "type": "string"
+                        },
+                        "totalLikesData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "newLikesData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "totalCommentsData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "newCommentsData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "totalHitsData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "newHitsData": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "hitsNumber",
+                        "likesNumber",
+                        "commentsNumber",
+                        "avatar",
+                        "roles",
+                        "username",
+                        "id",
+                        "date",
+                        "totalLikesData",
+                        "newLikesData",
+                        "totalCommentsData",
+                        "newCommentsData",
+                        "totalHitsData",
+                        "newHitsData"
+                      ],
+                      "required": [
+                        "hitsNumber",
+                        "likesNumber",
+                        "commentsNumber",
+                        "avatar",
+                        "roles",
+                        "username",
+                        "id",
+                        "date",
+                        "totalLikesData",
+                        "newLikesData",
+                        "totalCommentsData",
+                        "newCommentsData",
+                        "totalHitsData",
+                        "newHitsData"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleList/{page}": {
+      "get": {
+        "summary": "admin平台管理/文章列表",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "序号，文章id，发布时间yyyy-mm-dd，标题（末尾tag显示类型），作者，阅读量，分数，状态（待审/发布/封禁），操作（详情，发布/封禁，删除）",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeId",
+            "in": "query",
+            "description": "typeId为空不限文章类型，=其他就是返回特定类型",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idOrder",
+            "in": "query",
+            "description": "序号顺序，0是升序，1是降序",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "title": "返回内容",
+                      "type": "object",
+                      "properties": {
+                        "totalArticlesNumber": {
+                          "type": "integer"
+                        },
+                        "articles": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "文章对应的id"
+                              },
+                              "date": {
+                                "type": "string",
+                                "description": "创建时间"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "标题"
+                              },
+                              "typeId": {
+                                "type": "integer"
+                              },
+                              "username": {
+                                "type": "string",
+                                "description": "用户名"
+                              },
+                              "hitsNumber": {
+                                "description": "阅读量 ",
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "integer",
+                                "description": "状态 0：封禁，1：可用，2：草稿，3：待审"
+                              }
+                            },
+                            "x-apifox-orders": [
+                              "id",
+                              "date",
+                              "title",
+                              "typeId",
+                              "username",
+                              "hitsNumber",
+                              "status"
+                            ],
+                            "required": [
+                              "id",
+                              "date",
+                              "title",
+                              "typeId",
+                              "username",
+                              "hitsNumber",
+                              "status"
+                            ],
+                            "x-apifox-refs": {},
+                            "x-apifox-ignore-properties": []
+                          }
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "totalArticlesNumber",
+                        "articles"
+                      ],
+                      "required": [
+                        "totalArticlesNumber",
+                        "articles"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/details": {
+      "get": {
+        "summary": "新闻详情",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "新闻浏览量加一",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newsId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "newsId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "time": {
+                          "type": "string",
+                          "title": "文章时间"
+                        },
+                        "title": {
+                          "type": "string",
+                          "title": "标题"
+                        },
+                        "content": {
+                          "type": "string",
+                          "title": "内容"
+                        },
+                        "hits": {
+                          "title": "阅读量",
+                          "type": "integer"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "time",
+                        "title",
+                        "content",
+                        "hits"
+                      ],
+                      "required": [
+                        "time",
+                        "title",
+                        "content",
+                        "hits"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "评论",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newsId": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "newsId",
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "title": "返回内容",
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/admin": {
+      "get": {
+        "summary": "admin信息",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "admin-token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "newUsers": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "totalUsers": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "newArticles": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "totalArticles": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "minItems": 7,
+                          "maxItems": 7
+                        },
+                        "newUsersNumber": {
+                          "type": "integer"
+                        },
+                        "totalUsersNumber": {
+                          "type": "integer"
+                        },
+                        "newArticlesNumber": {
+                          "type": "integer"
+                        },
+                        "totalArticlesNumber": {
+                          "type": "integer"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "roles": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer"
+                        },
+                        "date": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "newUsers",
+                        "totalUsers",
+                        "newArticles",
+                        "totalArticles",
+                        "newUsersNumber",
+                        "totalUsersNumber",
+                        "newArticlesNumber",
+                        "totalArticlesNumber",
+                        "avatar",
+                        "roles",
+                        "username",
+                        "id",
+                        "date"
+                      ],
+                      "required": [
+                        "newUsers",
+                        "totalUsers",
+                        "newArticles",
+                        "totalArticles",
+                        "newUsersNumber",
+                        "totalUsersNumber",
+                        "newArticlesNumber",
+                        "totalArticlesNumber",
+                        "avatar",
+                        "roles",
+                        "username",
+                        "id",
+                        "date"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reader/index": {
+      "get": {
+        "summary": "新闻主页",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "title": "返回内容",
+                      "type": "object",
+                      "properties": {
+                        "articleArray": {
+                          "type": "array",
+                          "items": {
+                            "x-apifox-overrides": {},
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "id"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "标题"
+                              },
+                              "content": {
+                                "type": "string",
+                                "description": "内容"
+                              },
+                              "articleAbstract": {
+                                "type": "string",
+                                "description": "文章摘要"
+                              },
+                              "createDate": {
+                                "type": "string",
+                                "description": "创建时间"
+                              },
+                              "typeId": {
+                                "type": "string",
+                                "description": "文章类型"
+                              }
+                            },
+                            "x-apifox-refs": {},
+                            "x-apifox-orders": [
+                              "id",
+                              "title",
+                              "content",
+                              "articleAbstract",
+                              "createDate",
+                              "typeId"
+                            ],
+                            "required": [
+                              "id",
+                              "title",
+                              "content",
+                              "articleAbstract",
+                              "createDate",
+                              "typeId"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          }
+                        },
+                        "TypeIdArray": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/type"
+                          }
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "articleArray",
+                        "TypeIdArray"
+                      ],
+                      "required": [
+                        "articleArray",
+                        "TypeIdArray"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/login": {
+      "post": {
+        "summary": "登录",
+        "x-apifox-folder": "通用接口",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "用户名"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "密码"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "2007": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "title": "访问token"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "title": "刷新token"
+                        },
+                        "tokenType": {
+                          "type": "string",
+                          "title": "token类型"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "01G4Y8CQZ2S17E1GCK45PZXQTT"
+                      ],
+                      "required": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ],
+                      "x-apifox-refs": {
+                        "01G4Y8CQZ2S17E1GCK45PZXQTT": {
+                          "$ref": "#/components/schemas/JwtTokenVO",
+                          "x-apifox-overrides": {}
+                        }
+                      },
+                      "x-apifox-ignore-properties": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ]
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "01G4Y8BPXZTE6YT39V4KQZN1A1"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {
+                    "01G4Y8BPXZTE6YT39V4KQZN1A1": {
+                      "$ref": "#/components/schemas/response",
+                      "x-apifox-overrides": {
+                        "data": {
+                          "type": "object",
+                          "properties": {},
+                          "title": "返回内容",
+                          "x-apifox-orders": [
+                            "01G4Y8CQZ2S17E1GCK45PZXQTT",
+                            "01G4Y8CQZ2S17E1GCK45PZXQTT"
+                          ],
+                          "required": [],
+                          "x-apifox-refs": {
+                            "01G4Y8CQZ2S17E1GCK45PZXQTT": {
+                              "$ref": "#/components/schemas/JwtTokenVO",
+                              "x-apifox-overrides": {}
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "data"
+                      ]
+                    }
+                  },
+                  "x-apifox-ignore-properties": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editor/articleContent": {
+      "get": {
+        "summary": "editor文章详情",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "content": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string",
+                          "title": "标题"
+                        },
+                        "typeId": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 3
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "content",
+                        "title",
+                        "typeId"
+                      ],
+                      "required": [
+                        "content",
+                        "title",
+                        "typeId"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleContent": {
+      "get": {
+        "summary": "admin文章列表获取详情",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "typeId": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 4
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "title",
+                        "content",
+                        "typeId"
+                      ],
+                      "required": [
+                        "title",
+                        "content",
+                        "typeId"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reader/photo": {
+      "post": {
+        "summary": "拍照识别",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "content": {
+                          "type": "string",
+                          "title": "内容"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "content"
+                      ],
+                      "required": [
+                        "content"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/userStatusChange": {
+      "put": {
+        "summary": "admin封禁解封用户",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "0为封禁，1为解封"
+                  }
+                },
+                "required": [
+                  "id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleStatusChange": {
+      "put": {
+        "summary": "admin发布封禁文章",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "0为封禁，1为发布"
+                  }
+                },
+                "required": [
+                  "id",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/profile": {
+      "post": {
+        "summary": "保存信息",
+        "x-apifox-folder": "通用接口",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reader/login": {
+      "post": {
+        "summary": "reader登录",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "code"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "description": "头像",
+                    "format": "binary"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "昵称"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "title": "访问token"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "title": "刷新token"
+                        },
+                        "tokenType": {
+                          "type": "string",
+                          "title": "token类型"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "01G6W90J8P5A3F5772T1ADB5GJ"
+                      ],
+                      "required": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ],
+                      "x-apifox-refs": {
+                        "01G6W90J8P5A3F5772T1ADB5GJ": {
+                          "$ref": "#/components/schemas/JwtTokenVO",
+                          "x-apifox-overrides": {}
+                        }
+                      },
+                      "x-apifox-ignore-properties": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ]
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleDelete": {
+      "delete": {
+        "summary": "admin删除文章",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editor/uploadArticleFile": {
+      "post": {
+        "summary": "editor通过文件上传文章",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "typeId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": " 状态 2：草稿，3：待审"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "status",
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleTypeChange": {
+      "put": {
+        "summary": "admin修改文章类型",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "文章自身id"
+                  },
+                  "typeId": {
+                    "type": "string",
+                    "description": "上传类型所对应id"
+                  }
+                },
+                "required": [
+                  "id",
+                  "typeId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/refreshToken": {
+      "get": {
+        "summary": "刷新token",
+        "x-apifox-folder": "通用接口",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "如果accessToken过期,则由前端访问refreshToken，返回新的accessToken和refreshToken。注意，这里将refreshToken作为请求参数，无需放在header里。如果refreshToken过期，返回登录过期的错误。如果refreshToken没过期，返回新的accessToken和refreshToken。",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "title": "访问token"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "title": "刷新token"
+                        },
+                        "tokenType": {
+                          "type": "string",
+                          "title": "token类型"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "01G4Y8XKK2DNRP9W6PHCC4BTS8"
+                      ],
+                      "required": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ],
+                      "x-apifox-refs": {
+                        "01G4Y8XKK2DNRP9W6PHCC4BTS8": {
+                          "$ref": "#/components/schemas/JwtTokenVO",
+                          "x-apifox-overrides": {}
+                        }
+                      },
+                      "x-apifox-ignore-properties": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ]
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "01G4Y85KGSDFVWDX8CCTRT9SY6"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {
+                    "01G4Y85KGSDFVWDX8CCTRT9SY6": {
+                      "$ref": "#/components/schemas/response",
+                      "x-apifox-overrides": {
+                        "data": {
+                          "type": "object",
+                          "properties": {},
+                          "title": "返回内容",
+                          "x-apifox-orders": [
+                            "01G4Y8XKK2DNRP9W6PHCC4BTS8",
+                            "01G4Y8XKK2DNRP9W6PHCC4BTS8"
+                          ],
+                          "required": [],
+                          "x-apifox-refs": {
+                            "01G4Y8XKK2DNRP9W6PHCC4BTS8": {
+                              "$ref": "#/components/schemas/JwtTokenVO",
+                              "x-apifox-overrides": {}
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "data"
+                      ]
+                    }
+                  },
+                  "x-apifox-ignore-properties": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/avatar": {
+      "post": {
+        "summary": "修改头像",
+        "x-apifox-folder": "通用接口",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "avatar"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editor/uploadArticle": {
+      "post": {
+        "summary": "editor上传文章",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "typeId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": " 状态 2：草稿，3：待审"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/userList/{page}": {
+      "get": {
+        "summary": "admin平台管理/用户列表",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "序号，id，注册时间yyyy-mm-dd，用户名，状态（正常/封禁），操作（解封/封禁，删除）",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "description": "role为空不限身份组，role=其他就是返回特定类型",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idOrder",
+            "in": "query",
+            "description": "序号顺序，0是升序，1是降序",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "title": "返回内容",
+                      "type": "object",
+                      "properties": {
+                        "totalUsersNumber": {
+                          "type": "integer",
+                          "title": "用户总数"
+                        },
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "x-apifox-overrides": {},
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "id"
+                              },
+                              "username": {
+                                "type": "string",
+                                "description": "用户名"
+                              },
+                              "roles": {
+                                "description": "角色名称，ROLE_admin：管理员，ROLE_reader：客户端用户，ROLE_editor：新闻上传者",
+                                "type": "string"
+                              },
+                              "status": {
+                                "description": "状态 0：封禁，1：可用",
+                                "type": "integer"
+                              },
+                              "date": {
+                                "type": "string",
+                                "description": "创建时间"
+                              }
+                            },
+                            "x-apifox-refs": {},
+                            "x-apifox-orders": [
+                              "id",
+                              "username",
+                              "roles",
+                              "status",
+                              "date"
+                            ],
+                            "required": [
+                              "id",
+                              "username",
+                              "roles",
+                              "status",
+                              "date"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          },
+                          "minItems": 20,
+                          "maxItems": 20
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "totalUsersNumber",
+                        "users"
+                      ],
+                      "required": [
+                        "totalUsersNumber",
+                        "users"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reader/like": {
+      "post": {
+        "summary": "喜爱程度",
+        "x-apifox-folder": "客户端",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "客户端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newsId": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "title": "返回内容",
+                      "x-apifox-ignore-properties": [],
+                      "x-apifox-orders": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/articleData": {
+      "get": {
+        "summary": "admin平台数据/文章数据",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "平台数据/文章数据platformData/articleData",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pie": {
+                          "type": "object",
+                          "properties": {
+                            "typeId": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3,
+                                  4
+                                ],
+                                "x-apifox": {
+                                  "enumDescriptions": {
+                                    "1": "",
+                                    "2": "",
+                                    "3": "",
+                                    "4": ""
+                                  }
+                                }
+                              },
+                              "maxItems": 4,
+                              "minItems": 4,
+                              "title": "文章类型",
+                              "uniqueItems": true
+                            },
+                            "totalArticles": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 4
+                              },
+                              "maxItems": 4,
+                              "minItems": 4,
+                              "title": "文章数量",
+                              "uniqueItems": false
+                            }
+                          },
+                          "x-apifox-orders": [
+                            "typeId",
+                            "totalArticles"
+                          ],
+                          "required": [
+                            "typeId",
+                            "totalArticles"
+                          ],
+                          "title": "饼图",
+                          "x-apifox-ignore-properties": []
+                        },
+                        "bar": {
+                          "title": "柱状图",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "typeId": {
+                                "title": "文章类型",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 3
+                              },
+                              "totalArticles": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "title": "7天该类型数据",
+                                "minItems": 7,
+                                "maxItems": 7
+                              }
+                            },
+                            "x-apifox-orders": [
+                              "typeId",
+                              "totalArticles"
+                            ],
+                            "required": [
+                              "typeId",
+                              "totalArticles"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          },
+                          "description": "所有的文章的“类型-数量”",
+                          "minItems": 4,
+                          "maxItems": 4,
+                          "uniqueItems": true
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "pie",
+                        "bar"
+                      ],
+                      "required": [
+                        "pie",
+                        "bar"
+                      ],
+                      "x-apifox-refs": {},
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editor/articleData/{page}": {
+      "get": {
+        "summary": "editor文章数据",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "用户文章详情，restful风格，每页返回数据范围：0-20\n序号，发布时间yyyy-mm-dd，标题（末尾tag显示类型），阅读量，平均分数，状态（发布/封禁/草稿/待审），操作（编辑，删除）",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeId",
+            "in": "query",
+            "description": "typeId为空不限文章类型，role=其他就是返回特定类型",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idOrder",
+            "in": "query",
+            "description": "序号顺序，0是升序，1是降序",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "Jwt-token",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalArticlesNumber": {
+                          "type": "integer"
+                        },
+                        "articles": {
+                          "title": "返回内容",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "title": "id",
+                                "type": "integer"
+                              },
+                              "date": {
+                                "type": "string",
+                                "title": "创建日期"
+                              },
+                              "title": {
+                                "type": "string",
+                                "title": "标题"
+                              },
+                              "typeId": {
+                                "title": "类型",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 10
+                              },
+                              "hitsNumber": {
+                                "title": "阅读量",
+                                "type": "integer"
+                              },
+                              "score": {
+                                "title": "平均分数",
+                                "type": "integer"
+                              },
+                              "status": {
+                                "title": "状态",
+                                "type": "integer",
+                                "description": "状态 0：封禁，1：发布，2：草稿，3：待审"
+                              }
+                            },
+                            "x-apifox-orders": [
+                              "id",
+                              "date",
+                              "title",
+                              "typeId",
+                              "hitsNumber",
+                              "score",
+                              "status"
+                            ],
+                            "required": [
+                              "id",
+                              "date",
+                              "title",
+                              "typeId",
+                              "hitsNumber",
+                              "score",
+                              "status"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          },
+                          "minItems": 20,
+                          "maxItems": 20
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "totalArticlesNumber",
+                        "articles"
+                      ],
+                      "required": [
+                        "totalArticlesNumber",
+                        "articles"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/editor/articleDelete": {
+      "delete": {
+        "summary": "editor删除文章",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/userDelete": {
+      "delete": {
+        "summary": "admin删除用户",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "testing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/logout": {
+      "post": {
+        "summary": "登出",
+        "x-apifox-folder": "通用接口",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "token",
+            "required": true,
+            "example": "123456",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "required": [
+                    "success",
+                    "code",
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/index/register": {
+      "post": {
+        "summary": "注册为editor并登录",
+        "x-apifox-folder": "服务端",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "登录后检测是否有当前的账号，若无账号则注册当前账号为editor，并跳转到首页",
+        "tags": [
+          "服务端"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "description": "账号",
+                    "example": "张三"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "密码",
+                    "example": "zhangsan123"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "title": "是否成功"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "title": "状态码"
+                    },
+                    "message": {
+                      "type": "string",
+                      "title": "状态信息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "title": "访问token"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "title": "刷新token"
+                        },
+                        "tokenType": {
+                          "type": "string",
+                          "title": "token类型"
+                        }
+                      },
+                      "title": "返回内容",
+                      "x-apifox-orders": [
+                        "01G5244YF9S7M75E934ZM8FBD0"
+                      ],
+                      "x-apifox-refs": {
+                        "01G5244YF9S7M75E934ZM8FBD0": {
+                          "$ref": "#/components/schemas/JwtTokenVO",
+                          "x-apifox-overrides": {}
+                        }
+                      },
+                      "required": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ],
+                      "x-apifox-ignore-properties": [
+                        "accessToken",
+                        "refreshToken",
+                        "tokenType"
+                      ]
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "success",
+                    "code",
+                    "message",
+                    "data"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "examples": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "type": {
+        "type": "object",
+        "properties": {
+          "typeId": {
+            "description": "id",
+            "type": "integer"
+          },
+          "typeName": {
+            "type": "string",
+            "description": "类型名称"
+          }
+        },
+        "x-apifox-orders": [
+          "typeId",
+          "typeName"
+        ],
+        "required": [
+          "typeId",
+          "typeName"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "JwtTokenVO": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "title": "访问token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "title": "刷新token"
+          },
+          "tokenType": {
+            "type": "string",
+            "title": "token类型"
+          }
+        },
+        "x-apifox-orders": [
+          "accessToken",
+          "refreshToken",
+          "tokenType"
+        ],
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "tokenType"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "likes": {
+        "type": "object",
+        "properties": {
+          "likeId": {
+            "type": "integer",
+            "description": "id"
+          },
+          "createTime": {
+            "type": "string",
+            "description": "创建时间"
+          },
+          "score": {
+            "type": "integer",
+            "description": "得分"
+          }
+        },
+        "x-apifox-orders": [
+          "likeId",
+          "createTime",
+          "score"
+        ],
+        "required": [
+          "likeId",
+          "createTime",
+          "score"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "hits": {
+        "type": "object",
+        "properties": {
+          "hitId": {
+            "type": "integer",
+            "description": "id"
+          },
+          "hitNumber": {
+            "type": "integer",
+            "description": "点击数"
+          },
+          "createTime": {
+            "type": "string",
+            "description": "创建时间"
+          }
+        },
+        "x-apifox-orders": [
+          "hitId",
+          "hitNumber",
+          "createTime"
+        ],
+        "required": [
+          "hitId",
+          "hitNumber",
+          "createTime"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "title": {
+            "type": "string",
+            "description": "标题"
+          },
+          "content": {
+            "type": "string",
+            "description": "内容"
+          },
+          "articleAbstract": {
+            "type": "string",
+            "description": "文章摘要"
+          },
+          "status": {
+            "type": "integer",
+            "description": "状态 0：封禁，1：可用，2：草稿，3：待审"
+          },
+          "createDate": {
+            "type": "string",
+            "description": "创建时间"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "title",
+          "content",
+          "articleAbstract",
+          "status",
+          "createDate"
+        ],
+        "required": [
+          "id",
+          "title",
+          "content",
+          "articleAbstract",
+          "status",
+          "createDate"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码"
+          },
+          "role": {
+            "type": "integer",
+            "description": "角色名称，ROLE_admin：管理员，ROLE_reader：客户端用户，ROLE_editor：新闻上传者"
+          },
+          "profilePhoto": {
+            "type": "string",
+            "description": "头像"
+          },
+          "status": {
+            "description": "状态 0：封禁，1：可用",
+            "type": "integer"
+          },
+          "createDate": {
+            "type": "string",
+            "description": "创建时间"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "username",
+          "password",
+          "role",
+          "profilePhoto",
+          "status",
+          "createDate"
+        ],
+        "required": [
+          "id",
+          "username",
+          "password",
+          "role",
+          "profilePhoto",
+          "status",
+          "createDate"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "comment": {
+        "type": "object",
+        "properties": {
+          "commentId": {
+            "title": "评论id",
+            "type": "integer"
+          },
+          "content": {
+            "type": "string",
+            "title": "评论详情"
+          },
+          "Date": {
+            "type": "string",
+            "title": "创建日期"
+          }
+        },
+        "x-apifox-orders": [
+          "commentId",
+          "content",
+          "Date"
+        ],
+        "required": [
+          "commentId",
+          "content",
+          "Date"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "response": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "是否成功"
+          },
+          "code": {
+            "type": "integer",
+            "title": "状态码"
+          },
+          "message": {
+            "type": "string",
+            "title": "状态信息"
+          },
+          "data": {
+            "type": "object",
+            "properties": {},
+            "title": "返回内容",
+            "x-apifox-ignore-properties": [],
+            "x-apifox-orders": []
+          }
+        },
+        "x-apifox-orders": [
+          "success",
+          "code",
+          "message",
+          "data"
+        ],
+        "required": [
+          "success",
+          "code",
+          "message",
+          "data"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": "cnsoftbei"
+      },
+      "userArticle": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "title": "文章id"
+            },
+            "title": {
+              "type": "string",
+              "title": "文章标题"
+            },
+            "content": {
+              "type": "string",
+              "title": "文章内容"
+            },
+            "articleAbstract": {
+              "type": "string",
+              "title": "文章摘要"
+            },
+            "status": {
+              "type": "integer",
+              "title": "文章状态"
+            },
+            "createDate": {
+              "type": "string",
+              "title": "创建日期"
+            },
+            "type": {
+              "type": "object",
+              "properties": {
+                "typeId": {
+                  "type": "integer",
+                  "title": "类型id"
+                },
+                "typeName": {
+                  "type": "string",
+                  "title": "类型名"
+                }
+              },
+              "required": [
+                "typeId",
+                "typeName"
+              ],
+              "x-apifox-orders": [
+                "typeId",
+                "typeName"
+              ],
+              "title": "类型",
+              "x-apifox-ignore-properties": []
+            },
+            "likes": {
+              "type": "object",
+              "properties": {
+                "likeId": {
+                  "type": "integer",
+                  "title": "评分id"
+                },
+                "createTime": {
+                  "type": "string",
+                  "title": "创建日期"
+                },
+                "score": {
+                  "type": "integer",
+                  "title": "分数"
+                }
+              },
+              "required": [
+                "likeId",
+                "createTime",
+                "score"
+              ],
+              "x-apifox-orders": [
+                "likeId",
+                "createTime",
+                "score"
+              ],
+              "title": "评分",
+              "x-apifox-ignore-properties": []
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "content",
+            "articleAbstract",
+            "status",
+            "createDate",
+            "type",
+            "likes"
+          ],
+          "x-apifox-orders": [
+            "id",
+            "title",
+            "content",
+            "articleAbstract",
+            "status",
+            "createDate",
+            "type",
+            "likes"
+          ],
+          "x-apifox-ignore-properties": []
+        },
+        "x-apifox-folder": "cnsoftbei"
+      }
+    }
+  }
+}
